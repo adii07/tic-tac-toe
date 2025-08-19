@@ -25,12 +25,12 @@ const Board = ({ setDisplayText }: props) => {
     }, [board])
 
     useEffect(() => {
-        if (isOver==0) {
+        if (isOver == 0) {
             setDisplayText(!turn ? 'Player2 Wins' : 'Player1 Wins');
             return;
-        }else if(isOver==1){
+        } else if (isOver == 1) {
             setDisplayText(turn ? 'Player2 turn' : 'Player1 turn');
-        } else if(isOver == 2) {
+        } else if (isOver == 2) {
             setDisplayText('No one wins');
         }
     }, [turn, isOver])
@@ -69,13 +69,13 @@ const Board = ({ setDisplayText }: props) => {
         }
         setIsOver(1);
     }
-    const resetGame=()=>{
+    const resetGame = () => {
         setIsOver(-1);
         setTurn(0);
-        setBoard([0,0,0,0,0,0,0,0,0]);
+        setBoard([0, 0, 0, 0, 0, 0, 0, 0, 0]);
     }
     return <div className={styles.board} >
-        {(isOver==0 || isOver==2) && <span className={styles.overlay}>GAME OVER
+        {(isOver == 0 || isOver == 2) && <span className={styles.overlay}>GAME OVER
             <button onClick={resetGame}>Restart</button>
         </span>}
         {board.map((value, index) => {
