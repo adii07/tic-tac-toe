@@ -4,7 +4,7 @@ import Board from "./board";
 import styles from "./page.module.css";
 
 export default function Home() {
-  const [displayText,setDisplayText]=useState<string>('');
+  const [displayText, setDisplayText] = useState<string>('Player1 turn');
 
 
   return (
