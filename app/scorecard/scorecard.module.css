@@ -24,3 +24,18 @@
     font-size: 1.5rem;
     justify-content: space-between;
 }
+
+@media (max-width: 600px) {
+  .scorecard_player {
+    padding: 20px;
+    font-size: 1.3rem;
+  }
+}
+
+/* 📱 Extra small (very small devices) */
+@media (max-width: 400px) {
+  .scorecard_player {
+    padding: 20px;
+    font-size: 1.2rem;
+  }
+}

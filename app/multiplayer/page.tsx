@@ -4,6 +4,7 @@ import Board from "../board";
 import styles from "../page.module.css";
 import ScoreCard from "../scorecard/scorecard";
 import BackgroundXO from "../background/background";
+import Header from "../header/header";
 
 export default function MultiPlayerPage() {
     const [displayText, setDisplayText] = useState<string>('Player1 turn');
@@ -14,6 +15,7 @@ export default function MultiPlayerPage() {
     });
     return (
         <div className={styles.main}>
+            <Header/>
             <Board setDisplayText={setDisplayText} setScorecard={setScorecard} />
 
             <ScoreCard scorecard={scorecard} />
