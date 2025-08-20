@@ -1,26 +1,30 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Cell from "./cell";
 import styles from "./page.module.css";
+import { bestMove } from "@/helper/helper";
 type props = {
     setScorecard: Dispatch<SetStateAction<{ player1: number; player2: number; tie: number }>>;
+    isAi?: boolean;
 }
-const Board = ({ setScorecard }: props) => {
+const Board = ({ setScorecard, isAi }: props) => {
     const [board, setBoard] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0, 0]);
     const [turn, setTurn] = useState<number>(0);
-    const [winCells,setWinCells] = useState<number[]>([]);
+    const [winCells, setWinCells] = useState<number[]>([]);
     const [isOver, setIsOver] = useState<number>(1);
 
     const updatePlayer = (index: number) => {
-        if(isOver==0 || isOver==2){
+        if (isOver == 0 || isOver == 2) {
             resetGame();
-             return;
-        }
-        setBoard(prev => {
-            const updated = [...prev];
-            updated[index] = !turn ? 1 : 2;
-            return updated;
-        });
+            return;
+        } 
+            setBoard(prev => {
+                const updated = [...prev];
+                updated[index] = !turn ? 1 : 2;
+                return updated;
+            });
+        
         setTurn(turn ? 0 : 1);
+
     }
 
 
@@ -29,6 +33,18 @@ const Board = ({ setScorecard }: props) => {
         checkWin();
     }, [board])
 
+    useEffect(()=>{
+        if(isAi && turn==1 && isOver == 1) {
+            const updated = [...board];
+            const aiMove = bestMove(updated);
+            if (aiMove !== undefined) {
+                setTimeout(() => {
+                    updatePlayer(aiMove);
+                }, 100)
+            }
+        }
+    },[turn])
+
     useEffect(() => {
         if (isOver == 0) {
             setScorecard(prev => ({
@@ -36,14 +52,13 @@ const Board = ({ setScorecard }: props) => {
                 [!turn ? 'player2' : 'player1']: prev[!turn ? 'player2' : 'player1'] + 1
             }));
             return;
-        } else if (isOver == 1) {
         } else if (isOver == 2) {
             setScorecard(prev => ({
                 ...prev,
                 tie: prev.tie + 1
             }));
         }
-    }, [turn, isOver])
+    }, [isOver])
 
     const checkWin = () => {
         // Rows
@@ -91,7 +106,7 @@ const Board = ({ setScorecard }: props) => {
     }
     return <div className={styles.board} >
         {board.map((value, index) => {
-            return <Cell isOver={isOver} value={value} key={index} turn={index} updatePlayer={updatePlayer} overlay={isOver!=1 &&!winCells.includes(index)} />
+            return <Cell isOver={isOver} value={value} key={index} turn={index} updatePlayer={updatePlayer} overlay={isOver != 1 && !winCells.includes(index)} />
         })}
     </div>
 }

@@ -15,7 +15,7 @@ export default function AiPage() {
         <div className={styles.main} >
             <Header />
             <Header />
-            <Board setScorecard={setScorecard} />
+            <Board setScorecard={setScorecard} isAi={true}/>
 
             <ScoreCard scorecard={scorecard} isAiMode={true} />
         </div >
