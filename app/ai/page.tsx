@@ -1,10 +1,23 @@
-import React from 'react';
+"use client";
+import Header from '@/components/header/header';
+import ScoreCard from '@/components/scorecard/scorecard';
+import React, { useState } from 'react';
+import Board from '../board';
+import styles from "../page.module.css";
 
 export default function AiPage() {
+    const [scorecard, setScorecard] = useState<{ player1: number; player2: number; tie: number }>({
+        player1: 0,
+        player2: 0,
+        tie: 0
+    });
     return (
-        <main>
-            <h1>AI Page</h1>
-            <p>Welcome to the AI page of the Tic-Tac-Toe app.</p>
-        </main>
+        <div className={styles.main} >
+            <Header />
+            <Header />
+            <Board setScorecard={setScorecard} />
+
+            <ScoreCard scorecard={scorecard} isAiMode={true} />
+        </div >
     );
 }

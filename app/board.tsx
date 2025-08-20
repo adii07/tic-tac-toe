@@ -2,10 +2,9 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Cell from "./cell";
 import styles from "./page.module.css";
 type props = {
-    setDisplayText: Dispatch<SetStateAction<string>>;
     setScorecard: Dispatch<SetStateAction<{ player1: number; player2: number; tie: number }>>;
 }
-const Board = ({ setDisplayText, setScorecard }: props) => {
+const Board = ({ setScorecard }: props) => {
     const [board, setBoard] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0, 0]);
     const [turn, setTurn] = useState<number>(0);
     const [winCells,setWinCells] = useState<number[]>([]);
@@ -32,20 +31,17 @@ const Board = ({ setDisplayText, setScorecard }: props) => {
 
     useEffect(() => {
         if (isOver == 0) {
-            setDisplayText(!turn ? 'Player2 Wins' : 'Player1 Wins');
             setScorecard(prev => ({
                 ...prev,
                 [!turn ? 'player2' : 'player1']: prev[!turn ? 'player2' : 'player1'] + 1
             }));
             return;
         } else if (isOver == 1) {
-            setDisplayText(turn ? 'Player2 turn' : 'Player1 turn');
         } else if (isOver == 2) {
             setScorecard(prev => ({
                 ...prev,
                 tie: prev.tie + 1
             }));
-            setDisplayText('No one wins');
         }
     }, [turn, isOver])
 

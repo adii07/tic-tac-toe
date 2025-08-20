@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
-import BackgroundXO from "./background/background";
+import BackgroundXO from "../components/background/background";
 
 export default function Home() {
   const router=useRouter();
