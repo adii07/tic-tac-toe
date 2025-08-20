@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import BackgroundXO from "./background/background";
 
 export const metadata: Metadata = {
   title: "Tic-Tac-Toe",

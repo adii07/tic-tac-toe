@@ -3,6 +3,7 @@ import { useState } from "react";
 import Board from "../board";
 import styles from "../page.module.css";
 import ScoreCard from "../scorecard/scorecard";
+import BackgroundXO from "../background/background";
 
 export default function MultiPlayerPage() {
     const [displayText, setDisplayText] = useState<string>('Player1 turn');
@@ -16,7 +17,6 @@ export default function MultiPlayerPage() {
             <Board setDisplayText={setDisplayText} setScorecard={setScorecard} />
 
             <ScoreCard scorecard={scorecard} />
-            {/* <p className={styles.display_text}>{displayText}</p> */}
         </div>
     );
 }
