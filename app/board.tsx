@@ -41,7 +41,7 @@ const Board = ({ setScorecard, isAi }: props) => {
             if (aiMove != undefined) {
                 setTimeout(() => {
                     updatePlayer(aiMove);
-                }, 1000)
+                }, 200)
             }
         }
     }, [turn, board, isOver, isAi])
