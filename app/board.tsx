@@ -5,8 +5,9 @@ import { bestMove } from "@/helper/helper";
 type props = {
     setScorecard: Dispatch<SetStateAction<{ player1: number; player2: number; tie: number }>>;
     isAi?: boolean;
+    difficulty?: string;
 }
-const Board = ({ setScorecard, isAi }: props) => {
+const Board = ({ setScorecard, isAi, difficulty }: props) => {
     const [board, setBoard] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0, 0]);
     const [turn, setTurn] = useState<number>(0);
     const [winCells, setWinCells] = useState<number[]>([]);
@@ -37,7 +38,19 @@ const Board = ({ setScorecard, isAi }: props) => {
     useEffect(() => {
         if (isAi && turn == 1 && isOver == 1) {
             const updated = [...board];
-            const aiMove = bestMove(updated);
+            let aiMove;
+
+            if (difficulty === "easy") {
+                // random move
+                const moves = updated
+                    .map((v, i) => (v === 0 ? i : null))
+                    .filter((x): x is number => x !== null);
+                aiMove = moves[Math.floor(Math.random() * moves.length)];
+            } else if (difficulty === "medium") {
+                aiMove = bestMove(updated, 1); // limited lookahead
+            } else {
+                aiMove = bestMove(updated, 3); // perfect AI
+            }
             if (aiMove != undefined) {
                 setTimeout(() => {
                     updatePlayer(aiMove);

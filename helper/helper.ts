@@ -1,14 +1,16 @@
-function minimax(board:any, depth:number, isMaximizing:boolean) {
-  if (calculateWinner(board) === 1) return -10 + depth;
-  if (calculateWinner(board) === 2) return 10 - depth;
-  if (!board.includes(0)) return 0;    
+function minimax(board:any, depth:number, isMaximizing:boolean, maxDepth:number) {
+   const winner = calculateWinner(board);
+  if (winner === 1) return -10 + depth; // human win
+  if (winner === 2) return 10 - depth; // AI win
+  if (!board.includes(0)) return 0;   
+  if (depth >= maxDepth) return 0;
 
   if (isMaximizing) {
     let bestScore = -Infinity;
     for (let i = 0; i < 9; i++) {
       if (board[i] === 0) {
         board[i] = 2;
-        let score = minimax(board, depth + 1, false);
+        let score = minimax(board, depth + 1, false, maxDepth);
         board[i] = 0;
         bestScore = Math.max(score, bestScore);
       }
@@ -19,7 +21,7 @@ function minimax(board:any, depth:number, isMaximizing:boolean) {
     for (let i = 0; i < 9; i++) {
       if (board[i] === 0) {
         board[i] = 1;
-        let score = minimax(board, depth + 1, true);
+        let score = minimax(board, depth + 1, true, maxDepth);
         board[i] = 0;
         bestScore = Math.min(score, bestScore);
       }
@@ -28,16 +30,16 @@ function minimax(board:any, depth:number, isMaximizing:boolean) {
   }
 }
 
-export function bestMove(board:any) {
-    if (calculateWinner(board) || !board.includes(0)) {
-      return; // stop AI move, game ended
-    }
+export function bestMove(board: any, maxDepth: number) {
+  if (calculateWinner(board) || !board.includes(0)) {
+    return; // stop AI move, game ended
+  }
   let bestScore = -Infinity;
   let move;
   for (let i = 0; i < 9; i++) {
     if (board[i] == 0) {
       board[i] = 2; // AI plays '2'
-      let score = minimax(board, 0, false);
+      let score = minimax(board, 0, false, maxDepth);
       board[i] = 0;
       if (score > bestScore) {
         bestScore = score;

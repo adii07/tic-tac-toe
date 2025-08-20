@@ -4,8 +4,10 @@ import ScoreCard from '@/components/scorecard/scorecard';
 import React, { useState } from 'react';
 import Board from '../board';
 import styles from "../page.module.css";
+import DifficultyToggle from '@/components/difficulty';
 
 export default function AiPage() {
+    const [difficulty, setDifficulty] = useState("medium");
     const [scorecard, setScorecard] = useState<{ player1: number; player2: number; tie: number }>({
         player1: 0,
         player2: 0,
@@ -15,9 +17,9 @@ export default function AiPage() {
         <div className={styles.main} >
             <Header />
             <Header />
-            <Board setScorecard={setScorecard} isAi={true}/>
-
+            <Board setScorecard={setScorecard} isAi={true} difficulty={difficulty} />
             <ScoreCard scorecard={scorecard} isAiMode={true} />
+            <DifficultyToggle onChange={setDifficulty} />
         </div >
     );
 }
