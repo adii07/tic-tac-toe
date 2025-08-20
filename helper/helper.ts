@@ -1,7 +1,7 @@
 function minimax(board:any, depth:number, isMaximizing:boolean) {
   if (calculateWinner(board) === 1) return -10 + depth;
   if (calculateWinner(board) === 2) return 10 - depth;
-
+  if (!board.includes(0)) return 0;    
 
   if (isMaximizing) {
     let bestScore = -Infinity;
