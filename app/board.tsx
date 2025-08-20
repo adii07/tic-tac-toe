@@ -16,13 +16,14 @@ const Board = ({ setScorecard, isAi }: props) => {
         if (isOver == 0 || isOver == 2) {
             resetGame();
             return;
-        } 
-            setBoard(prev => {
-                const updated = [...prev];
-                updated[index] = !turn ? 1 : 2;
-                return updated;
-            });
-        
+        }
+        if (board[index] != 0 || isOver != 1) return;
+        setBoard(prev => {
+            const updated = [...prev];
+            updated[index] = !turn ? 1 : 2;
+            return updated;
+        });
+
         setTurn(turn ? 0 : 1);
 
     }
@@ -33,17 +34,17 @@ const Board = ({ setScorecard, isAi }: props) => {
         checkWin();
     }, [board])
 
-    useEffect(()=>{
-        if(isAi && turn==1 && isOver == 1) {
+    useEffect(() => {
+        if (isAi && turn == 1 && isOver == 1) {
             const updated = [...board];
             const aiMove = bestMove(updated);
-            if (aiMove !== undefined) {
+            if (aiMove != undefined) {
                 setTimeout(() => {
                     updatePlayer(aiMove);
-                }, 100)
+                }, 1000)
             }
         }
-    },[turn])
+    }, [turn, board, isOver, isAi])
 
     useEffect(() => {
         if (isOver == 0) {
