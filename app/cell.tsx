@@ -6,20 +6,25 @@ type props = {
     turn: number;
     updatePlayer: (index: number) => void;
     isOver: number;
+    overlay: boolean;
 
 }
-const Cell = ({ value, turn, updatePlayer, isOver }: props) => {
+const Cell = ({ value, turn, updatePlayer, isOver, overlay }: props) => {
 
     const onclickAction = () => {
-        if (value == 0) {
+        if (value == 0 || isOver != 1) {
             updatePlayer(turn);
         }
     }
 
-    return <div className={styles.cell} onClick={onclickAction} style={{
-        opacity: isOver==0 || isOver==2 ? 0.2 : 1,
-        transition: "opacity 0.3s ease"
-    }}>{value == 0 ? "" : value == 1 ? 'X' : 'O'}</div>
+    return <div className={styles.cell} onClick={onclickAction}>
+        <span style={{
+            opacity: overlay ? 0.2 : 1,
+            transition: "opacity 0.4s ease"
+        }}>
+            {value == 0 ? "" : value == 1 ? 'X' : 'O'}
+        </span>
+    </div>
 }
 
 export default Cell;
